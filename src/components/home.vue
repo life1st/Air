@@ -24,7 +24,7 @@
     position: absolute;
     width: 100%;
     min-height: 100%;
-    margin-top: -44px;
+    /*margin-top: 44px;*/
     background-color: #362460;
     text-align: center;
   }
@@ -33,7 +33,7 @@
     overflow: hidden;
   }
   .city-card {
-    margin-top: 80px;
+    margin-top: 66px;
     display: inline-block;
     position: relative;
   }

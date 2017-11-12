@@ -32,7 +32,9 @@
     header {
       background-color: #36235f;
       height: 44px;
-      position: relative;
+      position: fixed;
+      left: 0;
+      right: 0;
       z-index: 100;
       .setting {
         float: left;
