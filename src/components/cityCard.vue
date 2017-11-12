@@ -1,56 +1,146 @@
 <template>
     <div class="city-card">
-      <p class="temperature">{{temperature}}</p>
-      <p class="city-name">{{cityName}}</p>
+      <p class="temperature">{{info.temperature}}</p>
+      <p class="city-name">{{info.cityName}}</p>
       <div class="status">
         <img src="../img/rainy-icon.png" alt="rainy">
-        <span>{{status}}</span>
+        <span>{{info.status}}</span>
       </div>
       <div class="detail">
         <div class="wind">
           <img src="../img/wind-icon.png" alt="">
-          <p class="num">{{windSpeed}}</p>
+          <p class="num">{{info.windSpeed}}</p>
           <p class="chance">CHANCE</p>
         </div>
         <div class="rainy">
           <img src="../img/rainyChance-icon.png" alt="">
-          <p class="num">{{rainyChance}}</p>
+          <p class="num">{{info.rainyChance}}</p>
           <p class="chance">CHANCE</p>
         </div>
         <div class="humidity">
           <img src="../img/humidity-icon.png" alt="">
-          <p class="num">{{humidity}}</p>
+          <p class="num">{{info.humidity}}</p>
           <p class="chance">HUMIDITY</p>
         </div>
       </div>
       <div class="weekly">
-
+        <div class="day">
+          <p>TUE</p>
+          <div class="img-wrap">
+            <img src="../img/tue-icon.png" alt="">
+          </div>
+          <p class="c-temperature">12</p>
+        </div>
+        <div class="day">
+          <p>WED</p>
+          <div class="img-wrap">
+          <img src="../img/wed-icon.png" alt="">
+          </div>
+            <p class="c-temperature">8</p>
+        </div>
+        <div class="day">
+          <p>THU</p>
+          <div class="img-wrap">
+          <img src="../img/thu-icon.png" alt="">
+          </div>
+            <p class="c-temperature">6</p>
+        </div>
+        <div class="day">
+          <p>FRI</p>
+          <div class="img-wrap">
+          <img src="../img/fri-icon.png" alt="">
+          </div>
+            <p class="c-temperature">9</p>
+        </div>
+        <div class="day">
+          <p>SAT</p>
+          <div class="img-wrap">
+          <img src="../img/sat-icon.png" alt="">
+          </div>
+            <p class="c-temperature">4</p>
+        </div>
+        <div class="day">
+          <p>SUN</p>
+          <div class="img-wrap">
+          <img src="../img/sun-icon.png" alt="">
+          </div>
+            <p class="c-temperature">-3</p>
+        </div>
       </div>
     </div>
 </template>
 <script>
   import jsonp from 'jsonp'
+  import axios from 'axios'
   export default {
 
-    data: function () {
+    data() {
       return {
-        temperature: 23,
-        cityName: 'San Francisco',
-        status: 'Rainy',
-        windSpeed: 8,
-        rainyChance: 23,
-        humidity: 83
+        info: {
+          temperature: 23,
+          cityName: 'San Francisco',
+          status: 'Rainy',
+          windSpeed: 8,
+          rainyChance: 23,
+          humidity: 83
+        }
       }
+    },
+    mounted() {
+
+      var _this = this
+
+      this.toData()
+        .then(function (res) {
+          var res = res.data
+          console.log(res)
+          var info = _this.info
+          info.cityName = res.city.name
+          info.temperature = parseInt(res.list[0].main.temp - 273.15)
+          info.windSpeed = res.list[0].wind.speed
+          info.rainyChance = parseInt(res.list[0].rain['3h']*100)
+          info.status = res.list[0].weather[0].description
+          info.humidity = res.list[0].main.humidity
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+
+
+    },
+    methods: {
+      toData: function () {
+        var res = new Promise(function (resolve,reject) {
+          if (localStorage.getItem('time') &&
+            new Date().getTime() - localStorage.getItem('time') < 6000000){
+            console.log('localstorage')
+            resolve(JSON.parse(localStorage.getItem('res')))
+          }else {
+            localStorage.setItem('time', new Date().getTime())
+            console.log('new data')
+            var cityId = 1814905
+            axios.get('http://api.openweathermap.org/data/2.5/forecast?id='+cityId+'&APPID=754faa9db2ccd9149d4b67acc25aa327')
+              .then(function (res) {
+                console.log(res)
+                localStorage.setItem('res',JSON.stringify(res))
+                resolve(res);
+              })
+              .catch(function (err) {
+                reject(err)
+              })
+          }
+          /*          jsonp('/api/data/2.5/forecast?id=1814905&APPID=754faa9db2ccd9149d4b67acc25aa327 ',null,function (err,res) {
+                      console.log(res)
+                      return res;
+                    })*/
+        })
+        return res;
+      },
+
     }
   }
 
-  jsonp('https://api.caiyunapp.com/v2/TAkhjf8d1nlSlspN/121.6544,25.1552/realtime.jsonp',null,function (err,data) {
-    if (err){
-      console.log(err)
-    }else {
-      console.log(data)
-    }
-  })
+
 </script>
 <style scoped lang="less">
   .city-card {
@@ -131,6 +221,26 @@
       left: 0;
       background-color: rgba(0,0,0,0.3);
       border-radius: 0 0 8px 8px;
+      display: flex;
+      justify-content: space-around;
+      .day {
+        margin-top: 26px;
+      }
+      .img-wrap {
+        height: 20px;
+        margin-top: 15px;
+      }
+      .c-temperature {
+        font-size: 20px;
+        line-height: 20px;
+        margin-top: 8px;
+        position: relative;
+        &:after {
+          content: '°';
+          position: absolute;
+          top: 0;
+        }
+      }
     }
   }
 </style>

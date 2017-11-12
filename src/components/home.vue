@@ -6,7 +6,6 @@
 
 <script>
   import cityCard from '@/components/cityCard'
-
   export  default {
     name: 'home',
     components: {
