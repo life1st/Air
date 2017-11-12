@@ -1,6 +1,11 @@
 <template>
   <div id="home">
-    <city></city>
+    <div class="city-wrap">
+      <city></city>
+    </div>
+    <div class="data-org">
+      <p>数据来自：<a href="https://openweathermap.org" target="_blank">openWeatherMap</a></p>
+    </div>
   </div>
 </template>
 
@@ -18,14 +23,31 @@
   #home {
     position: absolute;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     margin-top: -44px;
     background-color: #362460;
+    text-align: center;
+  }
+  .city-wrap {
+    height: 600px;
+    overflow: hidden;
   }
   .city-card {
+    margin-top: 80px;
+    display: inline-block;
+    position: relative;
+  }
+  .data-org {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    color: #7c53dd;
+    text-align: center;
+    font-size: 10px;
+    a {
+      color: #fff;
+    }
   }
 </style>
