@@ -1,11 +1,21 @@
 <template>
   <div id="app">
     <header>
-      <div class="setting"><a href="#/setting"><img src="./img/setting.png" alt="setting-btn"></a></div>
-      <div class="location"><a href="#/detail"><img src="./img/location-icon.png" alt="location-btn"></a></div>
+      <div class="setting">
+        <a href="#/setting">
+          <img src="./img/setting.png" alt="setting-btn">
+        </a>
+      </div>
+      <div class="location">
+        <a href="#/detail">
+          <img src="./img/location-icon.png" alt="location-btn">
+        </a>
+      </div>
       <h1><a href="#/home">{{title}}</a></h1>
     </header>
-    <router-view/>
+    <div class="content-wrap">
+      <router-view/>
+    </div>
   </div>
 
 </template>
@@ -25,6 +35,7 @@
 
 <style scoped lang="less">
   @import "less/common.css";
+
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -43,6 +54,7 @@
         float: right;
       }
       img {
+        display: inline-block;
         height: 28px;
         width: 28px;
         padding: 8px ;
@@ -56,6 +68,9 @@
           color: #fff;
         }
       }
+    }
+    .content-wrap {
+      padding-top: 44px;
     }
   }
 </style>

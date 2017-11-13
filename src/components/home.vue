@@ -1,12 +1,14 @@
 <template>
   <div id="home">
-    <div class="city-wrap">
-      <city></city>
+      <div class="city-wrap">
+        <city></city>
+      </div>
+      <div class="data-org">
+        <p>数据来自：
+          <a href="https://openweathermap.org" target="_blank">openWeatherMap</a>
+        </p>
+      </div>
     </div>
-    <div class="data-org">
-      <p>数据来自：<a href="https://openweathermap.org" target="_blank">openWeatherMap</a></p>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -15,6 +17,13 @@
     name: 'home',
     components: {
       'city': cityCard
+    },
+    ready() {
+      this.$nextTick(() => {
+
+      })
+    },
+    mounted() {
     }
   }
 </script>
@@ -24,16 +33,15 @@
     position: absolute;
     width: 100%;
     min-height: 100%;
-    /*margin-top: 44px;*/
     background-color: #362460;
     text-align: center;
   }
   .city-wrap {
-    height: 600px;
-    overflow: hidden;
+    width: 100%;
+    height: 90%;
   }
   .city-card {
-    margin-top: 66px;
+    margin-top: 26px;
     display: inline-block;
     position: relative;
   }

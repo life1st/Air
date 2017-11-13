@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import home from  '@/components/home'
 import detail from  '@/components/detail/detail'
+import setting from '@/components/setting'
 Vue.use(Router)
 
 export default new Router({
@@ -20,6 +21,11 @@ export default new Router({
       path: '/detail',
       name: 'detail',
       component: detail
+    },
+    {
+      path:'/setting',
+      name: 'setting',
+      component: setting
     }
   ]
 })
