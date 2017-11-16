@@ -1,11 +1,12 @@
 <template>
   <div id="home">
       <div class="city-wrap">
-        <city></city>
+        <city @click=""></city>
       </div>
       <div class="data-org">
         <p>数据来自：
           <a href="https://openweathermap.org" target="_blank">openWeatherMap</a>
+        {{refreshDate}}分钟前更新
         </p>
       </div>
     </div>
@@ -18,13 +19,11 @@
     components: {
       'city': cityCard
     },
-    ready() {
-      this.$nextTick(() => {
-
-      })
+    data() {
+      return {
+        refreshDate: Math.floor((new Date().getTime() - localStorage.getItem('time'))/(1000*60))
+      }
     },
-    mounted() {
-    }
   }
 </script>
 

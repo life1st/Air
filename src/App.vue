@@ -7,11 +7,11 @@
         </a>
       </div>
       <div class="location">
-        <a href="#/detail">
+        <a>
           <img src="./img/location-icon.png" alt="location-btn">
         </a>
       </div>
-      <h1><a href="#/home">{{title}}</a></h1>
+      <h1><a href="#/home">{{main.title}}</a></h1>
     </header>
     <div class="content-wrap">
       <router-view/>
@@ -21,14 +21,54 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     name: 'app',
     data: function () {
       return {
-        title: 'Weather'
+        main: {
+          title: 'Weather',
+          date: ''
+        }
       }
     },
-
+    mounted() {
+      var _this = this
+/*      this.toData()
+        .then(function (res) {
+          var main = _this.main;
+          console.log(res)
+          main.title = res.data.city
+          console.log(main.date)
+        })
+        .catch(function (err) {
+          console.log(err)
+        })*/
+    },
+    methods: {
+/*      toData: function() {
+        var amapKey = 'a75aef737f1db811578d960310aba54e';//高德API key
+        var res = new Promise(function (resolve,reject){
+          if (localStorage.getItem('city') &&
+            new Date().getTime() - localStorage.getItem('time') < 36000000){
+            console.log('old city data')
+            var res = JSON.parse(localStorage.getItem('city'))
+            resolve(res)
+          }else {
+            axios.get('http://restapi.amap.com/v3/ip?key=' + amapKey)
+              .then(function (res) {
+                console.log('new city data')
+                localStorage.setItem('city',JSON.stringify(res))
+                resolve(res)
+              })
+              .catch(function (err) {
+                reject(err)
+              })
+          }
+        })
+        return res;
+      }*/
+    }
   }
 
 </script>

@@ -73,7 +73,6 @@
   import jsonp from 'jsonp'
   import axios from 'axios'
   export default {
-
     data() {
       return {
         info: {
@@ -87,57 +86,72 @@
       }
     },
     mounted() {
-
       var _this = this
-
       this.toData()
         .then(function (res) {
-          var res = res.data
           console.log(res)
+          var res = res.data
           var info = _this.info
           info.cityName = res.city.name
-          info.temperature = parseInt(res.list[0].main.temp - 273.15)
+          info.temperature = parseInt(res.list[0].main.temp)
           info.windSpeed = res.list[0].wind.speed
-          info.rainyChance = parseInt(res.list[0].rain['3h']*100)
+          info.rainyChance = res.list[0].rain['3h']*100
           info.status = res.list[0].weather[0].description
           info.humidity = res.list[0].main.humidity
         })
         .catch(function (err) {
           console.log(err)
         })
-
-
     },
     methods: {
       toData: function () {
-        var res = new Promise(function (resolve,reject) {
+        var weatherData = new Promise(function (resolve,reject) {
           if (localStorage.getItem('time') &&
             new Date().getTime() - localStorage.getItem('time') < 6000000){
-            console.log('localstorage')
-            resolve(JSON.parse(localStorage.getItem('res')))
+            console.log('old weather data')
+            resolve(JSON.parse(localStorage.getItem('weatherData')))
           }else {
             localStorage.setItem('time', new Date().getTime())
-            console.log('new data')
-            var cityId = 1814905
-            axios.get('http://api.openweathermap.org/data/2.5/forecast?id='+cityId+'&APPID=754faa9db2ccd9149d4b67acc25aa327')
-              .then(function (res) {
-                console.log(res)
-                localStorage.setItem('res',JSON.stringify(res))
+            console.log('new weather data')
+            var url = 'http://restapi.amap.com/v3/ip'
+            var amapKey = 'a75aef737f1db811578d960310aba54e' //高德API key
+            axios.get(url, {
+              params: {
+                key: amapKey
+              }
+            }).then(function (res) {
+              localStorage.setItem('city',JSON.stringify(res))
+              var loc = {
+                lat: 29.56278,
+                lon: 106.55278
+              }
+              var location = res.data.rectangle.split(/\,|\;/)
+              loc.lon = location[0]
+              loc.lat = location[1]
+              var url = 'http://api.openweathermap.org/data/2.5/forecast'
+              var oWMKey = '754faa9db2ccd9149d4b67acc25aa327'
+              axios.get(url, {
+                params: {
+                  lat: loc.lat,
+                  lon: loc.lon,
+                  APPID: oWMKey,
+                  lang: 'zh_cn',
+                  units: 'metric'
+                }
+              }).then(function (res) {
+                localStorage.setItem('weatherData',JSON.stringify(res))
                 resolve(res);
+              }).catch(function (err) {
+                console.log(err)
               })
-              .catch(function (err) {
-                reject(err)
-              })
+            }).catch(function (err) {
+              console.log(err)
+            })
           }
-          /*          jsonp('/api/data/2.5/forecast?id=1814905&APPID=754faa9db2ccd9149d4b67acc25aa327 ',null,function (err,res) {
-                      console.log(res)
-                      return res;
-                    })*/
         })
-        return res;
+        return weatherData;
       },
-
-    }
+    },
   }
 
 
