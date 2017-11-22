@@ -5,64 +5,44 @@
         <img src="../../img/detail/sunny.png" alt="weather-img">
       </div>
       <div class="content">
-        <h2>cityName</h2>
-        <p>Sunny 19°</p>
+        <h2>{{content.citiName}}</h2>
+        <h1>{{content.country}}</h1>
+        <p>{{content.weather}} {{content.temp}}℃</p>
       </div>
     </div>
-    <div class="timeline" >
-      <div class="time-item" v-for="item in items">
-        <div class="date">
-          <p>morning</p>
-          <p>12:00</p>
-        </div>
-        <div class="weather-img">
-          <img src="" alt="">
-        </div>
-        <div class="detail">
-          <p>Sunny</p>
-          <p>19℃</p>
-          <div class="info">
-            <div class="wind">
-              <div class="img-wrap">
-                <img src="" alt="">
-              </div>
-              <p>4mph</p>
-            </div>
-            <div class="humidity">
-              <div class="img-wrap">
-
-              </div>
-              <p>63%</p>
-            </div>
-            <div class="rainy-chance">
-              <div class="img-wrap">
-                <img src="" alt="">
-              </div>
-              <p>14%</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <timeline></timeline>
   </div>
-
 </template>
 <script>
+  import timeline from '@/components/detail/timeline'
+
   export default {
+    components: {
+      'timeline': timeline
+    },
     data() {
       return {
-        items: {
-
+        content: {
+          citiName: '',
+          country: '',
+          weather: '',
+          temp: ''
         }
       }
     },
-    methods: {
-      toData: function () {
-        new Promise((resolve,reject) => {
-
-        })
-      }
+    mounted() {
+      new Promise((resolve,reject) => {
+        resolve(localStorage.getItem('weatherData'))
+      }).then((res) => {
+        var data = JSON.parse(res).data
+        console.log(data)
+        this.content.citiName = data.city.name
+        this.content.country = data.city.country
+        this.content.weather = data.list[0].weather[0].description
+        this.content.temp = Math.floor(data.list[0].main.temp)
+      })
     }
+
   }
 </script>
 <style scoped lang="less">
@@ -70,13 +50,29 @@
     background-color: #69bcf7;
     width: 100%;
     height: 190px;
-  }
-  .img-wrap {
-    width: 100px;
-    height: 100px;
-    img {
-      width: 100%;
+    border-bottom: 3px solid #fff;
+    .img-wrap {
+      width: 100px;
+      height: 100px;
+      margin: 38px 0 0 40px;
+      float: left;
+      img {
+        width: 100%;
+      }
     }
+    .content {
+      float: right;
+      margin: 38px;
+      h2,p {
+        line-height: 26px;
+        color: #fff;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .timeline {
+    background-color: #1a2432;
   }
   .time-item {
     height: 100px;
