@@ -10,7 +10,7 @@
         <div class="wind">
           <img src="../img/wind-icon.png" alt="">
           <p class="num">{{info.windSpeed}}</p>
-          <p class="chance">CHANCE</p>
+          <p class="chance">Deg:{{info.deg}}</p>
         </div>
         <div class="rainy">
           <img src="../img/rainyChance-icon.png" alt="">
@@ -81,7 +81,8 @@
           status: 'Rainy',
           windSpeed: 8,
           rainyChance: 23,
-          humidity: 83
+          humidity: 83,
+          deg: 0
         }
       }
     },
@@ -95,9 +96,10 @@
           info.cityName = res.city.name
           info.temperature = parseInt(res.list[0].main.temp)
           info.windSpeed = res.list[0].wind.speed
-          info.rainyChance = res.list[0].rain['3h']*100
+          info.rainyChance = res.list[0].rain['3h']*100 || '0'
           info.status = res.list[0].weather[0].description
           info.humidity = res.list[0].main.humidity
+          info.deg = Math.floor(res.list[0].wind.deg)
         })
         .catch(function (err) {
           console.log(err)
@@ -105,7 +107,7 @@
     },
     methods: {
       toData: function () {
-        var weatherData = new Promise(function (resolve,reject) {
+        var weatherData = new Promise((resolve,reject) => {
           if (localStorage.getItem('time') &&
             new Date().getTime() - localStorage.getItem('time') < 6000000){
             console.log('old weather data')
@@ -113,21 +115,29 @@
           }else {
             localStorage.setItem('time', new Date().getTime())
             console.log('new weather data')
-            var url = 'http://restapi.amap.com/v3/ip'
-            var amapKey = 'a75aef737f1db811578d960310aba54e' //高德API key
-            axios.get(url, {
-              params: {
-                key: amapKey
-              }
-            }).then(function (res) {
+//            var url = 'http://restapi.amap.com/v3/ip'
+            var amapKey = 'a75aef737f1db811578d960310aba54e'
+            var url = 'http://apis.map.qq.com/ws/location/v1/ip'
+            var qqKey = 'CSIBZ-4LKWV-HNIPZ-UYVZG-BYG6O-PSBMP'
+            var urls = url + '?&key=' + qqKey + '&output=jsonp'
+
+            var resWeatherData = new Promise((resolve,reject) => {
+              jsonp(urls, null, function (err, data) {
+                if (err){
+                  reject(err)
+                }
+                resolve(data)
+              })
+            }).then((res) => {
               localStorage.setItem('city',JSON.stringify(res))
               var loc = {
-                lat: 29.56278,
-                lon: 106.55278
+                lat: 30.66667,
+                lon: 104.066673 //默认地点坐标,随便写的，城市是成都
               }
-              var location = res.data.rectangle.split(/\,|\;/)
-              loc.lon = location[0]
-              loc.lat = location[1]
+              var location = res.result.location
+              console.log(location,'loc')
+              loc.lon = location.lng
+              loc.lat = location.lat
               var url = 'http://api.openweathermap.org/data/2.5/forecast'
               var oWMKey = '754faa9db2ccd9149d4b67acc25aa327'
               axios.get(url, {
@@ -142,10 +152,8 @@
                 localStorage.setItem('weatherData',JSON.stringify(res))
                 resolve(res);
               }).catch(function (err) {
-                console.log(err)
+                reject(err)
               })
-            }).catch(function (err) {
-              console.log(err)
             })
           }
         })
@@ -153,8 +161,6 @@
       },
     },
   }
-
-
 </script>
 <style scoped lang="less">
   .city-card {

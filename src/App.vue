@@ -2,9 +2,9 @@
   <div id="app">
     <header>
       <div class="setting">
-        <a href="#/setting">
+        <router-link to="/setting">
           <img src="./img/setting.png" alt="setting-btn">
-        </a>
+        </router-link>
       </div>
       <div class="location">
         <a>
@@ -81,7 +81,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     header {
-      background-color: #36235f;
+      background-color: #7d61f2;
       height: 44px;
       position: fixed;
       left: 0;
@@ -111,6 +111,7 @@
     }
     .content-wrap {
       padding-top: 44px;
+      box-sizing: border-box;
     }
   }
 </style>

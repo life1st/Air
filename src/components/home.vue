@@ -1,7 +1,9 @@
 <template>
   <div id="home">
       <div class="city-wrap">
-        <city @click=""></city>
+        <router-link to="/detail">
+          <city></city>
+        </router-link>
       </div>
       <div class="data-org">
         <p>数据来自：
@@ -21,9 +23,17 @@
     },
     data() {
       return {
-        refreshDate: Math.floor((new Date().getTime() - localStorage.getItem('time'))/(1000*60))
+        refreshDate: 0
       }
     },
+    mounted() {
+      new Promise((resolve,reject) => {
+        resolve(localStorage.getItem('time'))
+      }).then((time) => {
+        console.log(time)
+        this.refreshDate = Math.floor((new Date().getTime() - time)/(1000*60))
+      })
+    }
   }
 </script>
 
