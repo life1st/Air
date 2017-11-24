@@ -7,7 +7,7 @@
         </router-link>
       </div>
       <div class="location">
-        <a>
+        <a @click="clearData()">
           <img src="./img/location-icon.png" alt="location-btn">
         </a>
       </div>
@@ -17,7 +17,6 @@
       <router-view/>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -34,6 +33,12 @@
     },
     mounted() {
       var _this = this
+      this.clearData = function () {
+        if (confirm('是否重新获取数据？')){
+          localStorage.clear();
+          window.location.reload();
+        }
+      }
 /*      this.toData()
         .then(function (res) {
           var main = _this.main;
