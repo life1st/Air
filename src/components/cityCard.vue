@@ -109,7 +109,7 @@
       toData: function () {
         var weatherData = new Promise((resolve,reject) => {
           if (localStorage.getItem('time') &&
-            new Date().getTime() - localStorage.getItem('time') < 6000000){
+            new Date().getTime() - localStorage.getItem('time') < 1000*60*10){
             console.log('old weather data')
             resolve(JSON.parse(localStorage.getItem('weatherData')))
           }else {
