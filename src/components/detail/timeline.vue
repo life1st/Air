@@ -14,20 +14,20 @@
         <div class="info">
           <div class="wind">
             <div class="img-wrap">
-              <img src="../../img/detail/timeline/icon1.png" alt="icon1">
+              <!--<img src="../../img/detail/timeline/icon1.png" alt="icon1">-->
             </div>
             <p>{{item.wind.speed}}mph</p>
           </div>
           <div class="humidity">
             <div class="img-wrap">
-              <img src="../../img/detail/timeline/icon2.png" alt="icon2">
+              <!--<img src="../../img/detail/timeline/icon2.png" alt="icon2">-->
             </div>
             <p v-if="item.rain">{{Math.floor(item.rain['3h']*100)}}%</p>
             <p v-else>0%</p>
           </div>
           <div class="rainy-chance">
             <div class="img-wrap">
-              <img src="../../img/detail/timeline/icon3.png" alt="icon3">
+              <!--<img src="../../img/detail/timeline/icon3.png" alt="icon3">-->
             </div>
             <p>{{item.main.humidity}}%</p>
           </div>
@@ -102,6 +102,7 @@
       padding-top: 23px;
       display: inline-block;
       font-size: 0;
+      box-sizing: border-box;
       &>*{
         font-size: 14px;
       }

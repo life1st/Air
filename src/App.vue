@@ -11,7 +11,7 @@
           <img src="./img/location-icon.png" alt="location-btn">
         </a>
       </div>
-      <h1><a href="#/home">{{main.title}}</a></h1>
+      <h1><a href="#/">{{main.title}}</a></h1>
     </header>
     <div class="content-wrap">
       <router-view/>
@@ -115,7 +115,7 @@
       }
     }
     .content-wrap {
-      padding-top: 44px;
+      padding: 44px 0;
       box-sizing: border-box;
     }
   }

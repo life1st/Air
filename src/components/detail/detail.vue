@@ -2,7 +2,7 @@
   <div class="detail-wrap">
     <div class="now-detail">
       <div class="img-wrap">
-        <img src="../../img/detail/sunny.png" alt="weather-img">
+        <!--<img src="../../img/detail/sunny.png" alt="weather-img">-->
       </div>
       <div class="content">
         <h2>{{content.citiName}}</h2>

@@ -9,17 +9,17 @@
       <div class="detail">
         <div class="wind">
           <img src="../img/wind-icon.png" alt="">
-          <p class="num">{{info.windSpeed}}</p>
-          <p class="chance">Deg:{{info.deg}}</p>
+          <p class="num">{{info.windSpeed.toFixed(1)}}</p>
+          <p class="chance">Deg:{{info.deg}}°</p>
         </div>
         <div class="rainy">
           <img src="../img/rainyChance-icon.png" alt="">
-          <p class="num">{{info.rainyChance}}</p>
+          <p class="num">{{info.rainyChance.toFixed(1)}}</p>
           <p class="chance">CHANCE</p>
         </div>
         <div class="humidity">
           <img src="../img/humidity-icon.png" alt="">
-          <p class="num">{{info.humidity}}</p>
+          <p class="num">{{info.humidity % 1 === 0 ? info.humidity : info.humidity.toFixed(1)}}</p>
           <p class="chance">HUMIDITY</p>
         </div>
       </div>
@@ -27,42 +27,42 @@
         <div class="day">
           <p>TUE</p>
           <div class="img-wrap">
-            <img src="../img/tue-icon.png" alt="">
+            <!--<img src="../img/tue-icon.png" alt="">-->
           </div>
           <p class="c-temperature">12</p>
         </div>
         <div class="day">
           <p>WED</p>
           <div class="img-wrap">
-          <img src="../img/wed-icon.png" alt="">
+          <!--<img src="../img/wed-icon.png" alt="">-->
           </div>
             <p class="c-temperature">8</p>
         </div>
         <div class="day">
           <p>THU</p>
           <div class="img-wrap">
-          <img src="../img/thu-icon.png" alt="">
+          <!--<img src="../img/thu-icon.png" alt="">-->
           </div>
             <p class="c-temperature">6</p>
         </div>
         <div class="day">
           <p>FRI</p>
           <div class="img-wrap">
-          <img src="../img/fri-icon.png" alt="">
+          <!--<img src="../img/fri-icon.png" alt="">-->
           </div>
             <p class="c-temperature">9</p>
         </div>
         <div class="day">
           <p>SAT</p>
           <div class="img-wrap">
-          <img src="../img/sat-icon.png" alt="">
+          <!--<img src="../img/sat-icon.png" alt="">-->
           </div>
             <p class="c-temperature">4</p>
         </div>
         <div class="day">
           <p>SUN</p>
           <div class="img-wrap">
-          <img src="../img/sun-icon.png" alt="">
+          <!--<img src="../img/sun-icon.png" alt="">-->
           </div>
             <p class="c-temperature">-3</p>
         </div>

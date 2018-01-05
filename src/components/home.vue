@@ -40,10 +40,14 @@
 <style scoped lang="less">
   #home {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     min-height: 100%;
     background-color: #362460;
     text-align: center;
+    box-sizing: border-box;
+    padding: 44px 0;
   }
   .city-wrap {
     width: 100%;
