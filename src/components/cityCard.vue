@@ -14,7 +14,7 @@
         </div>
         <div class="rainy">
           <img src="../img/rainyChance-icon.png" alt="">
-          <p class="num">{{info.rainyChance.toFixed(1)}}</p>
+          <p class="num">{{info.rainyChance}}</p>
           <p class="chance">CHANCE</p>
         </div>
         <div class="humidity">
@@ -87,21 +87,20 @@
       }
     },
     mounted() {
-      var _this = this
       this.toData()
-        .then(function (res) {
+        .then((res) => {
           console.log(res)
           var res = res.data
-          var info = _this.info
+          var info = this.info
           info.cityName = res.city.name
           info.temperature = parseInt(res.list[0].main.temp)
           info.windSpeed = res.list[0].wind.speed
-          info.rainyChance = res.list[0].rain['3h']*100 || '0'
+          info.rainyChance = (res.list[0].rain['3h']*100 || 0).toFixed(1)
           info.status = res.list[0].weather[0].description
           info.humidity = res.list[0].main.humidity
           info.deg = Math.floor(res.list[0].wind.deg)
         })
-        .catch(function (err) {
+        .catch((err) => {
           console.log(err)
         })
     },
